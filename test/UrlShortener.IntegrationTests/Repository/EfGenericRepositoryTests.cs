@@ -1,0 +1,50 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using FluentAssertions;
+using NUnit.Framework;
+using UrlShortener.DataAccess.Context;
+using UrlShortener.DataAccess.Models;
+using UrlShortener.DataAccess.Repository;
+using UrlShortener.IntegrationTests.Utilities;
+
+namespace UrlShortener.DataAccess.Repository.Tests
+{
+    [TestFixture]
+    public class EfGenericRepositoryTests : BaseToTest, IDisposable
+    {
+        private readonly UrlShortDbContext _urlShortDbContext;
+        private readonly EfGenericRepository<UrlModel> _entityRepository;
+
+        public EfGenericRepositoryTests()
+        {
+            _urlShortDbContext = new UrlShortDbContext(DbConnString);
+            _entityRepository = new EfGenericRepository<UrlModel>(_urlShortDbContext);
+        }
+
+        [Test]
+        public void GetAllAsyncObjects_WhenPropertiesIsNotNull_ThenOutIsListOfEntitiesFromDatabase()
+        {
+            // Arrange
+            var expected = new List<UrlModel> { new UrlModel { Id = 1, Url = "LongUrl", ShortUrl = "ShortUrl", CreationDate = new DateTime(2022, 10, 25, 0, 0, 0), QuantityClick = 1 } };
+
+            // Act
+            var actual = _entityRepository.GetAllAsync().Result.ToList();
+
+            // Assert
+            actual.Should().BeEquivalentTo(expected);
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            _urlShortDbContext.Dispose();
+        }
+    }
+}
