@@ -22,7 +22,7 @@ namespace UrlShortener.DataAccess.Infrastructure
         {
             builder.RegisterType<EfGenericRepository<UrlModel>>().As<IEfGenericRepository<UrlModel>>().InstancePerLifetimeScope();
 
-            builder.RegisterType<UrlShortDbContext>().As<UrlShortDbContext>().WithParameter("connectionString", _connectionString);
+            builder.RegisterType<UrlShortDbContext>().As<UrlShortDbContext>().WithParameter("connectionString", _connectionString).InstancePerLifetimeScope();
         }
     }
 }

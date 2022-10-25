@@ -9,7 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{6F57CB38-9
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UrlShortener.DataAccess", "src\UrlShortener.DataAccess\UrlShortener.DataAccess.csproj", "{A268082A-8205-4111-8DB9-A31667F7D335}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrlShortener.IntegrationTests", "test\UrlShortener.IntegrationTests\UrlShortener.IntegrationTests.csproj", "{98EE56D3-484D-4A90-AE0F-BFBAD57618A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UrlShortener.IntegrationTests", "test\UrlShortener.IntegrationTests\UrlShortener.IntegrationTests.csproj", "{98EE56D3-484D-4A90-AE0F-BFBAD57618A4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

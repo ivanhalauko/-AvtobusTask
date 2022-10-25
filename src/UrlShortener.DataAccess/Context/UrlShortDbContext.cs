@@ -28,5 +28,10 @@ namespace UrlShortener.DataAccess.Context
                 optionsBuilder.UseMySql(_connectionString);
             }
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<UrlModel>().ToTable("url").HasKey(p => new { p.Id });
+        }
     }
 }

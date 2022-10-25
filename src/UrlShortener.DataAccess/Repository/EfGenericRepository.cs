@@ -43,8 +43,8 @@ namespace UrlShortener.DataAccess.Repository
         public async Task<T> UpdateAsync(T entity)
         {
             UrlShortDbContext.Set<T>().Update(entity);
-            await UrlShortDbContext.SaveChangesAsync();
             var result = await UrlShortDbContext.FindAsync<T>(entity.Id);
+            await UrlShortDbContext.SaveChangesAsync();
             return result;
         }
 
