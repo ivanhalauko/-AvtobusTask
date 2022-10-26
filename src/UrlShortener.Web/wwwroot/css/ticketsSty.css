@@ -1,0 +1,139 @@
+﻿.area_box{
+    border-style: dashed;
+    border-width: 2px;
+    background-color: #e0aab3;
+    width: 500px;
+    /* height: 500px; */
+    box-sizing: content-box;
+    margin: 10px;
+}
+    .area_box .header{
+        text-align: center;
+    }
+
+    .area_box .body{
+        border-width: 1px;
+        border-color: rgb(4, 43, 56);
+        border-style:dashed;
+    }
+
+    .area_box .footer{
+        display:-webkit-inline-box;
+        display:block;
+    }
+
+    .area_box .body .seat-box {
+    /* position: relative; */
+    background: #fff;
+    width: 90px;
+    height: 80px;
+    -webkit-border-radius: 0 0 10px 10px;
+    border-radius: 10px;
+    -webkit-transition: all .2s ease;
+    transition: all .2s ease;
+    margin: 10px 10px;
+    padding: 10px 20px;
+    float:left;
+}
+
+    .area_box .body .seat-box:hover {
+        -webkit-box-shadow: 0 0 15px 0 rgba(0,0,0,.2);
+        box-shadow: 0 0 15px 0 rgba(0,0,0,.8);
+    }
+
+.seat-box__button{
+    /* position: relative; */
+    text-align: center;
+    margin: auto;
+}
+
+.seat-box p{
+    margin-top: 0.3em;
+    margin-bottom: 0.2em;
+    font-size: 0.7em;
+}
+
+.seat-box_notAvailable p{
+    margin-top: 0.3em;
+    margin-bottom: 0.2em;
+    font-size: 0.7em;
+}
+        
+        
+.seat_btn-pink {
+    background: #fa294c;
+    color: #fff;
+}
+        
+        .seat-box .seat-box__button .seat_btn {
+            /* position: relative; */
+            display: inline-block;
+            height: 40px;
+            font-size: 0.7em;
+            font-weight: 700;
+            line-height: 40px;
+            text-decoration: none;
+            border: 1px;
+            -webkit-border-radius: 10px;
+            border-radius: 3px;
+            padding: 0 10px;
+            -webkit-transition: all .2s ease;
+            transition: all .2s ease;
+            outline: 0;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        
+        .seat-box .seat-box__button .seat_btn:hover {
+            border-radius: 30px;
+        }
+
+        .area_box .body .seat-box_notAvailable {
+            /* position: relative; */
+            background: rgb(192, 187, 187);
+            width: 90px;
+            height: 80px;
+            -webkit-border-radius: 0 0 10px 10px;
+            border-radius: 10px;
+            -webkit-transition: all .2s ease;
+            transition: all .2s ease;
+            margin: 10px 10px;
+            padding: 10px 20px;
+            float:left;
+            }
+
+.seat_btn-gray {
+background: #796e6f;
+color: #fff;
+}
+
+.area_box .body .seat-box_notAvailable .seat-box__button .seat_btn {
+    /* position: relative; */
+    display: inline-block;
+    height: 40px;
+    font-size: 0.7em;
+    font-weight: 700;
+    line-height: 40px;
+    text-decoration: none;
+    border: 1px;
+    -webkit-border-radius: 10px;
+    border-radius: 3px;
+    padding: 0 10px;
+    -webkit-transition: all .2s ease;
+    transition: all .2s ease;
+    outline: 0;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.area_box .body .seat-box_notAvailable .seat-box__button a{
+    /* position: relative; */
+    display: inline-block;
+    font-size: 0.7em;
+    font-weight: 700;
+    line-height: 40px;
+    text-decoration: none;
+    border: 1px;
+    cursor:auto;
+    color: black;
+}
