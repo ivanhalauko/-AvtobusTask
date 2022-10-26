@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "UrlShortener.DataAccess": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:56721;http://localhost:56723"
+    }
+  }
+}
