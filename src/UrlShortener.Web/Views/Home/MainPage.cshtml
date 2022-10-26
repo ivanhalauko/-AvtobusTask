@@ -1,0 +1,64 @@
+﻿@model IEnumerable<UrlShortener.Web.Models.LinksInformationViewModel>
+
+@{
+    ViewData["Title"] = "MainPage";
+}
+
+<h1>MainPage</h1>
+<style>
+    thead input {
+        width: 100%;
+    }
+</style>
+<td>
+    <a class="btn btn-sm btn-primary bg-orange" asp-action="Create">Create New</a>
+</td>
+
+<table id="example" class="display" style="width:100%; border-width:1px">
+    <thead>
+        <tr>
+            <th hidden>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Url)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ShortUrl)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreationDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.QuantityClick)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    @*<tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Url)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ShortUrl)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreationDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.QuantityClick)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>*@
+</table>
