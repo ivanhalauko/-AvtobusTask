@@ -5,6 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using UrlShortener.Web.DtoModels;
+using UrlShortener.Web.Infrastructure;
+using UrlShortener.Web.Interfaces;
 using UrlShortener.Web.Models;
 using UrlShortener.Web.Services;
 
@@ -17,11 +20,15 @@ namespace UrlShortener.Web.Controllers
 #pragma warning restore S1075 // URIs should not be hardcoded
         private readonly UrlShortenerService _urlShortenerService;
         private readonly ILogger<HomeController> _logger;
+        private readonly IMapperConfig _mapperConfig;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(
+            ILogger<HomeController> logger,
+            IMapperConfig mapperConfig)
         {
             _urlShortenerService = new UrlShortenerService(new Uri(BaseURI));
             _logger = logger;
+            _mapperConfig = mapperConfig;
         }
 
         public IActionResult Index()
@@ -31,7 +38,17 @@ namespace UrlShortener.Web.Controllers
 
         public IActionResult MainPage()
         {
-            return View();
+            try
+            {
+                var linkShortenerDtoList = _urlShortenerService.ResponseGetAll().Data.ToList();
+                var entityViewModel = _mapperConfig.Mapper.Map<IEnumerable<LinkShorterDtoModel>, IEnumerable<LinksInformationViewModel>>(linkShortenerDtoList);
+                return View(entityViewModel);
+            }
+            catch (Exception)
+            {
+                return RedirectToAction(nameof(HomeController.Index),
+                                        nameof(HomeController).Replace("Controller", ""));
+            }
         }
 
         public IActionResult Privacy()
