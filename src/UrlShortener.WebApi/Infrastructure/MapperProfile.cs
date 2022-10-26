@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using UrlShortener.DataAccess.Models;
+using UrlShortener.WebApi.DtoModels;
 
 namespace UrlShortener.WebApi.Infrastructure
 {
@@ -7,10 +9,10 @@ namespace UrlShortener.WebApi.Infrastructure
         public MapperProfile()
         {
             // API to DAL
-            //// CreateMap<BookDto, Book>();
+            CreateMap<UrlModelDto, UrlModel>();
 
             // DAL to API
-            //// CreateMap<Book, BookDto>();
+            CreateMap<UrlModel, UrlModelDto>();
         }
     }
 }

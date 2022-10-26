@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Autofac;
+using Microsoft.Extensions.DependencyInjection;
 using UrlShortener.DataAccess.Context;
 using UrlShortener.DataAccess.Interfaces;
 using UrlShortener.DataAccess.Models;
@@ -21,8 +22,7 @@ namespace UrlShortener.DataAccess.Infrastructure
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<EfGenericRepository<UrlModel>>().As<IEfGenericRepository<UrlModel>>().InstancePerLifetimeScope();
-
-            builder.RegisterType<UrlShortDbContext>().As<UrlShortDbContext>().WithParameter("connectionString", _connectionString).InstancePerLifetimeScope();
+            builder.RegisterType<UrlShortDbContext>().As<UrlShortDbContext>().WithParameter("connectionString", _connectionString).SingleInstance();
         }
     }
 }

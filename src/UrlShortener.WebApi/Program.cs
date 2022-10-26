@@ -1,5 +1,6 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using UrlShortener.DataAccess.Infrastructure;
 using UrlShortener.WebApi.Infrastructure;
@@ -25,10 +26,7 @@ namespace UrlShortener.WebApi
             });
 
             builder.Services.AddControllers();
-            builder.Services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "UrlShortener.RestAPI", Version = "v1" });
-            });
+            builder.Services.AddSwaggerGen();
             builder.Services.AddEndpointsApiExplorer();
 
             var app = builder.Build();
