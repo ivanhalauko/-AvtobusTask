@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using RestSharp;
 using UrlShortener.Web.DtoModels;
+using UrlShortener.Web.Interfaces;
 using UrlShortener.Web.RestClientWrapper;
 
 namespace UrlShortener.Web.Services
 {
-    public class UrlShortenerService : UrlShortenerApiClient
+    public class UrlShortenerService : UrlShortenerApiClient, IUrlShortenerApiClient
     {
         public UrlShortenerService(Uri baseUri)
             : base(baseUri)

@@ -16,9 +16,12 @@ namespace UrlShortener.Web
 {
     public class Startup
     {
+        private readonly Uri _apiBaseUri;
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            _apiBaseUri = configuration.GetValue<Uri>("ApiBaseUri");
         }
 
         public IConfiguration Configuration { get; }
@@ -37,7 +40,7 @@ namespace UrlShortener.Web
 
         public void ConfigureContainer(ContainerBuilder builder)
         {
-            builder.RegisterModule(new AppModule());
+            builder.RegisterModule(new AppModule(_apiBaseUri));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

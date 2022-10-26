@@ -15,18 +15,16 @@ namespace UrlShortener.Web.Controllers
 {
     public class HomeController : Controller
     {
-#pragma warning disable S1075 // URIs should not be hardcoded
-        private const string BaseURI = "https://localhost:44322";
-#pragma warning restore S1075 // URIs should not be hardcoded
-        private readonly UrlShortenerService _urlShortenerService;
+        private readonly IUrlShortenerApiClient _urlShortenerService;
         private readonly ILogger<HomeController> _logger;
         private readonly IMapperConfig _mapperConfig;
 
         public HomeController(
             ILogger<HomeController> logger,
-            IMapperConfig mapperConfig)
+            IMapperConfig mapperConfig,
+            IUrlShortenerApiClient urlShortenerService)
         {
-            _urlShortenerService = new UrlShortenerService(new Uri(BaseURI));
+            _urlShortenerService = urlShortenerService;
             _logger = logger;
             _mapperConfig = mapperConfig;
         }
