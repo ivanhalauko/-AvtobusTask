@@ -4,14 +4,13 @@
     ViewData["Title"] = "MainPage";
 }
 
-<h1>MainPage</h1>
 <style>
     thead input {
         width: 100%;
     }
 </style>
 <td>
-    <a class="btn btn-sm btn-primary bg-orange" asp-action="Create">Create New</a>
+    <a class="btn btn-sm btn-primary bg-orange" asp-action="CreateShortUrl">Create New</a>
 </td>
 
 <table id="example" class="display" style="width:100%; border-width:1px">
@@ -35,10 +34,10 @@
             <th></th>
         </tr>
     </thead>
-    @*<tbody>
+    <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
+            <td hidden>
                 @Html.DisplayFor(modelItem => item.Id)
             </td>
             <td>
@@ -55,10 +54,9 @@
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.ActionLink("Delete", "DeleteUrl", new {  shortUrl = item.ShortUrl  })
             </td>
         </tr>
 }
-    </tbody>*@
+    </tbody>
 </table>

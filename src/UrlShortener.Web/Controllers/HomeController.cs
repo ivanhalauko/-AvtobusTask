@@ -49,6 +49,56 @@ namespace UrlShortener.Web.Controllers
             }
         }
 
+        public IActionResult CreateShortUrl() => View();
+
+        [HttpPost]
+        public IActionResult CreateShortUrl(LinksInformationViewModel linkFromView)
+        {
+            try
+            {
+                var linkShortUrlDto = new LinkShorterDtoModel
+                {
+                    Url = "sdsds",
+                    ShortUrl = "dfdd",
+                    CreationDate = new DateTime(2025, 10, 8, 0, 0, 0),
+                    QuantityClick = 1,
+                };
+
+                _urlShortenerService.ResponseCreate(linkShortUrlDto);
+                return RedirectToAction(nameof(HomeController.MainPage),
+                                        nameof(HomeController).Replace("Controller", ""));
+            }
+            catch (Exception)
+            {
+                return RedirectToAction(nameof(HomeController.Index),
+                                        nameof(HomeController).Replace("Controller", ""));
+            }
+        }
+
+        [HttpGet]
+        public IActionResult DeleteUrl(string shortUrl)
+        {
+            var linkShortenerDto = _urlShortenerService.ResponseGetByShortUrl(shortUrl).Data;
+            var entityViewModel = _mapperConfig.Mapper.Map<LinkShorterDtoModel, LinksInformationViewModel>(linkShortenerDto);
+            return View(entityViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteUrl(int id)
+        {
+            try
+            {
+                _urlShortenerService.ResponseDeleteById(id);
+                return RedirectToAction(nameof(HomeController.MainPage),
+                                        nameof(HomeController).Replace("Controller", ""));
+            }
+            catch (Exception)
+            {
+                return RedirectToAction(nameof(HomeController.Index),
+                                        nameof(HomeController).Replace("Controller", ""));
+            }
+        }
+
         public IActionResult Privacy()
         {
             return View();

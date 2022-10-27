@@ -20,7 +20,7 @@ namespace UrlShortener.DataAccess.Repository.Tests
         public EfGenericRepositoryTests()
         {
             _urlShortDbContext = new UrlShortDbContext(DbConnString);
-            _entityRepository = new EfGenericRepository<UrlModel>(_urlShortDbContext);
+            _entityRepository = new EfGenericRepository<UrlModel>(DbConnString);
         }
 
         [Test]
