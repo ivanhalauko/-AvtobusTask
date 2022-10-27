@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using UrlShortener.DataAccess.Models;
 using UrlShortener.WebApi.DtoModels;
+using UrlShortener.WebApi.Models;
 
 namespace UrlShortener.WebApi.Infrastructure
 {

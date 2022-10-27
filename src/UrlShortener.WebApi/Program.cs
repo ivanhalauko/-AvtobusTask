@@ -3,13 +3,11 @@
 using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
-using UrlShortener.DataAccess.Context;
-using UrlShortener.DataAccess.Infrastructure;
-using UrlShortener.DataAccess.Interfaces;
-using UrlShortener.DataAccess.Models;
-using UrlShortener.DataAccess.Repository;
+using UrlShortener.WebApi.Context;
 using UrlShortener.WebApi.Infrastructure;
 using UrlShortener.WebApi.Interfaces;
+using UrlShortener.WebApi.Models;
+using UrlShortener.WebApi.Repository;
 
 namespace UrlShortener.WebApi
 {
@@ -22,7 +20,7 @@ namespace UrlShortener.WebApi
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            ////var dbConnectionstring = builder.Configuration.GetConnectionString("DbConnectionstring");
+            var dbConnectionstring = builder.Configuration.GetConnectionString("DbConnectionstring");
             ////builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
             ////builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
             ////{
@@ -37,7 +35,7 @@ namespace UrlShortener.WebApi
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddScoped<IMapperConfig>(s => new MapperConfig(new MapperProfile()));
             ////builder.Services.AddScoped<UrlShortDbContext>(s => new UrlShortDbContext(dbConnectionstring));
-            ////builder.Services.AddScoped<IEfGenericRepository<UrlModel>>(s => new EfGenericRepository<UrlModel>(dbConnectionstring));
+            builder.Services.AddScoped<IEfGenericRepository<UrlModel>>(s => new EfGenericRepository<UrlModel>(dbConnectionstring));
 
             var app = builder.Build();
 

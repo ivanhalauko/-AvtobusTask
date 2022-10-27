@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using UrlShortener.DataAccess.Interfaces;
-using UrlShortener.DataAccess.Models;
-using UrlShortener.DataAccess.Repository;
 using UrlShortener.WebApi.DtoModels;
 using UrlShortener.WebApi.Interfaces;
+using UrlShortener.WebApi.Models;
+using UrlShortener.WebApi.Repository;
 
 namespace UrlShortener.WebApi.Controllers
 {
@@ -15,20 +14,20 @@ namespace UrlShortener.WebApi.Controllers
         private readonly IMapperConfig _mapperConfig;
         private readonly IEfGenericRepository<UrlModel> _efGenericRepository;
 
-        ////public LinkShorterController(
-        ////    IMapperConfig mapperConfig,
-        ////    IEfGenericRepository<UrlModel> repository)
-        ////{
-        ////    _mapperConfig = mapperConfig;
-        ////    _efGenericRepository = repository;
-        ////}
-
         public LinkShorterController(
-            IMapperConfig mapperConfig)
+            IMapperConfig mapperConfig,
+            IEfGenericRepository<UrlModel> repository)
         {
             _mapperConfig = mapperConfig;
-            _efGenericRepository = new EfGenericRepository<UrlModel>("user id=root;password=Mar_123;host=127.0.0.1;database=urlshortenerdatabase;");
+            _efGenericRepository = repository;
         }
+
+        ////public LinkShorterController(
+        ////    IMapperConfig mapperConfig)
+        ////{
+        ////    _mapperConfig = mapperConfig;
+        ////    _efGenericRepository = new EfGenericRepository<UrlModel>("user id=root;password=Mar_123;host=127.0.0.1;database=urlshortenerdatabase;");
+        ////}
 
         // GET: LinkShorterController
         [HttpGet("GetAll")]
