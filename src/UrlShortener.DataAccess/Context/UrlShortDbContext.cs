@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using UrlShortener.DataAccess.Models;
 
 namespace UrlShortener.DataAccess.Context
@@ -6,10 +7,6 @@ namespace UrlShortener.DataAccess.Context
     public class UrlShortDbContext : DbContext
     {
         private readonly string _connectionString;
-
-        public UrlShortDbContext()
-        {
-        }
 
         public UrlShortDbContext(string connectionString)
         {

@@ -12,9 +12,9 @@ namespace UrlShortener.DataAccess.Repository
     public class EfGenericRepository<T> : IEfGenericRepository<T>
         where T : class, IEntity
     {
-        public EfGenericRepository(UrlShortDbContext urlShortDbContext)
+        public EfGenericRepository(string connectionString)
         {
-            UrlShortDbContext = urlShortDbContext;
+            UrlShortDbContext = new UrlShortDbContext(connectionString);
         }
 
         public UrlShortDbContext UrlShortDbContext { get; set; }
