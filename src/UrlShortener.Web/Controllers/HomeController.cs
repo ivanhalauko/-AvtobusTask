@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Policy;
 using System.Threading.Tasks;
+using System.Web;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using UrlShortener.Web.DtoModels;
@@ -10,6 +13,7 @@ using UrlShortener.Web.Infrastructure;
 using UrlShortener.Web.Interfaces;
 using UrlShortener.Web.Models;
 using UrlShortener.Web.Services;
+using UrlShortener.Web.Utils;
 
 namespace UrlShortener.Web.Controllers
 {
@@ -52,18 +56,20 @@ namespace UrlShortener.Web.Controllers
         public IActionResult CreateShortUrl() => View();
 
         [HttpPost]
-        public IActionResult CreateShortUrl(LinksInformationViewModel linkFromView)
+        public IActionResult CreateShortUrl(string creationDate, LinksInformationViewModel linkFromView, string shortUrl = null)
         {
             try
             {
-                var linkShortUrlDto = new LinkShorterDtoModel
+                if (linkFromView.Url != null && shortUrl == null)
                 {
-                    Url = "sdsds",
-                    ShortUrl = "dfdd",
-                    CreationDate = new DateTime(2025, 10, 8, 0, 0, 0),
-                    QuantityClick = 1,
-                };
+                    linkFromView.ShortUrl = GenerateShortUrl();
+                    linkFromView.QuantityClick = 0;
+                    linkFromView.CreationDate = DateTime.Now;
+                    return View(linkFromView);
+                }
 
+                var linkShortUrlDto = _mapperConfig.Mapper.Map<LinksInformationViewModel, LinkShorterDtoModel>(linkFromView);
+                linkShortUrlDto.CreationDate = DateTime.Parse(creationDate);
                 _urlShortenerService.ResponseCreate(linkShortUrlDto);
                 return RedirectToAction(nameof(HomeController.MainPage),
                                         nameof(HomeController).Replace("Controller", ""));
@@ -75,10 +81,26 @@ namespace UrlShortener.Web.Controllers
             }
         }
 
+        private string GenerateShortUrl()
+        {
+            var key = KeyGenerator.Generate(10);
+            var shortUrl = new Uri($"{Request.Scheme}://{Request.Host.Value}{Request.PathBase}/{key}").ToString();
+            var fromDb = _urlShortenerService.GetByShortUrl(shortUrl);
+            while (fromDb.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                key = KeyGenerator.Generate(10);
+                shortUrl = new Uri($"{Request.Scheme}://{Request.Host.Value}{Request.PathBase}/{key}").ToString();
+                fromDb = _urlShortenerService.GetByShortUrl(shortUrl);
+            }
+
+            var result = shortUrl;
+            return result;
+        }
+
         [HttpGet]
         public IActionResult DeleteUrl(string shortUrl)
         {
-            var linkShortenerDto = _urlShortenerService.ResponseGetByShortUrl(shortUrl).Data;
+            var linkShortenerDto = _urlShortenerService.GetByShortUrl(shortUrl).Data;
             var entityViewModel = _mapperConfig.Mapper.Map<LinkShorterDtoModel, LinksInformationViewModel>(linkShortenerDto);
             return View(entityViewModel);
         }

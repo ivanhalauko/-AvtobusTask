@@ -34,11 +34,13 @@ namespace UrlShortener.Web.Services
             return responseGetAll;
         }
 
-        public RestResponse<LinkShorterDtoModel> ResponseGetByShortUrl(string shortLink)
+        public RestResponse<LinkShorterDtoModel> GetByShortUrl(string shortLink)
         {
-            var endPoint = $"/api/LinkShorter/GetByShortUrl/{shortLink}";
+            var endPoint = $"/api/LinkShorter/GetByShortUrl?shortLink=" + shortLink;
             RestRequest restRequest = new RestRequest(endPoint, Method.Get);
-            var responseGetAll = RestClientApi.ExecuteGetAsync<LinkShorterDtoModel>(restRequest).Result;
+            restRequest.AddHeader("x-api-key", "mykey");
+            restRequest.AddParameter("shortLink", shortLink, ParameterType.RequestBody);
+            var responseGetAll = RestClientApi.ExecuteAsync<LinkShorterDtoModel>(restRequest).Result;
             return responseGetAll;
         }
 
@@ -54,14 +56,8 @@ namespace UrlShortener.Web.Services
         public RestResponse ResponseDeleteById(int id)
         {
             var endPoint = $"/api/LinkShorter/DeleteById/{id}";
-            ////var endPoint = $"/api/LinkShorter/DeleteById";
-
             RestRequest restRequest = new RestRequest(endPoint, Method.Delete);
-            restRequest.AddHeader("accept", "*/*");
-            ////restRequest.AddUrlSegment("id", id.ToString());
-            ////restRequest.AddParameter("text/plain", null, ParameterType.RequestBody);
-            ////restRequest.AddHeader("Content-Type", "application/json");
-            var responseDelete = RestClientApi.Execute(restRequest);
+            var responseDelete = RestClientApi.ExecuteAsync(restRequest).Result;
             return responseDelete;
         }
     }

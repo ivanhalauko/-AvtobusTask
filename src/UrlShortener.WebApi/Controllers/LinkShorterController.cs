@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.Web;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using UrlShortener.WebApi.DtoModels;
 using UrlShortener.WebApi.Interfaces;
@@ -49,15 +50,14 @@ namespace UrlShortener.WebApi.Controllers
         }
 
         // GET api/<BookController>/5
-        [HttpGet("GetByShortUrl/{shortLink}")]
-        public ActionResult<UrlModel> GetByShortUrl(string shortLink)
+        [HttpGet("GetByShortUrl")]
+        public ActionResult<UrlModel> GetByShortUrlWithParams(string shortLink)
         {
-            var links = _efGenericRepository.GetAllAsync().Result;
-            var urlModel = links.FirstOrDefault(x => x.ShortUrl == shortLink);
+            var link = _efGenericRepository.GetAllAsync().Result;
+            var urlModel = link.FirstOrDefault(x => x.ShortUrl == shortLink);
             return urlModel is null ? NoContent() : Ok(urlModel);
         }
 
-        ////[HttpDelete("DeleteById")]
         // DELETE api/<BookController>/name
         [HttpDelete("DeleteById/{id}")]
         public ActionResult DeleteById(int id)

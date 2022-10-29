@@ -6,17 +6,18 @@
 <div class="container-fluid">
 
     <div class="col-md-4 offset-md-4">
-        <div class="form-container">
+        <div class="form-container" style="display: inline-block">
             <form class="form-horizontal" method="post" asp-controller="Home" asp-action="DeleteUrl"
                   asp-route-id="@Model.Id">
                 <div asp-validation-summary="ModelOnly"></div>
                 <div class="form-group">
-                    <h1 class="title_attention">AreYouSureYouWantToDelete:</h1>
+                    <h1 class="title_attention" >AreYouSureYouWantToDelete:</h1>
+                    <span class="icon icon-link"></span>
                     <label asp-for="Url">Url:</label>
                     <info>@Model.Url</info>
                 </div>
                 <div class="form-group">
-                    <span class="icon icon-location"></span>
+                    <span class="icon icon-link"></span>
                     <label asp-for=ShortUrl>ShortUrl:</label>
                     <info>@Model.ShortUrl</info>
                 </div>

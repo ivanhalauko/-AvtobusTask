@@ -10,7 +10,7 @@ namespace UrlShortener.Web.Interfaces
 
         public RestResponse<LinkShorterDtoModel> ResponseCreate(LinkShorterDtoModel linkEntity);
 
-        public RestResponse<LinkShorterDtoModel> ResponseGetByShortUrl(string shortLink);
+        public RestResponse<LinkShorterDtoModel> GetByShortUrl(string shortLink);
 
         public RestResponse ResponseDeleteById(int id);
     }

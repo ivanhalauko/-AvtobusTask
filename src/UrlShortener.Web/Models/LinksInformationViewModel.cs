@@ -7,6 +7,7 @@ namespace UrlShortener.Web.Models
     {
         public long Id { get; set; }
 
+        [Required(ErrorMessage = "URL required")]
         [Display(Name = "Long URL")]
         public string Url { get; set; }
 
