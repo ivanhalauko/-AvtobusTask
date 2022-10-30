@@ -44,14 +44,16 @@ namespace UrlShortener.Web.Services
             return responseGetAll;
         }
 
-        ////public RestResponse<LinkShorterDtoModel> ResponseUpdate(string shortLink, LinkShorterDtoModel linkEntity)
-        ////{
-        ////    var endPoint = $"/api/LinkShorter/{shortLink}";
-        ////    RestRequest restRequest = new RestRequest(endPoint, Method.Put);
-        ////    restRequest.AddBody(linkEntity);
-        ////    var responseUpdate = RestClientApi.ExecuteGetAsync<LinkShorterDtoModel>(restRequest).Result;
-        ////    return responseUpdate;
-        ////}
+        public RestResponse<LinkShorterDtoModel> ResponseUpdate(LinkShorterDtoModel linkEntity)
+        {
+            var endPoint = $"/api/LinkShorter/Update";
+            RestRequest restRequest = new RestRequest(endPoint, Method.Put);
+            restRequest.AddHeader("Content-Type", "application/json");
+            var jsonLink = JsonConvert.SerializeObject(linkEntity);
+            restRequest.AddBody(jsonLink, "application/json");
+            var responseUpdate = RestClientApi.ExecutePutAsync<LinkShorterDtoModel>(restRequest).Result;
+            return responseUpdate;
+        }
 
         public RestResponse ResponseDeleteById(int id)
         {

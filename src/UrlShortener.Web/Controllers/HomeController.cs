@@ -2,17 +2,12 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Security.Policy;
-using System.Threading.Tasks;
-using System.Web;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using UrlShortener.Web.DtoModels;
-using UrlShortener.Web.Infrastructure;
 using UrlShortener.Web.Interfaces;
 using UrlShortener.Web.Models;
-using UrlShortener.Web.Services;
 using UrlShortener.Web.Utils;
 
 namespace UrlShortener.Web.Controllers
@@ -33,11 +28,6 @@ namespace UrlShortener.Web.Controllers
             _mapperConfig = mapperConfig;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
-
         public IActionResult MainPage()
         {
             try
@@ -48,7 +38,7 @@ namespace UrlShortener.Web.Controllers
             }
             catch (Exception)
             {
-                return RedirectToAction(nameof(HomeController.Index),
+                return RedirectToAction(nameof(HomeController.Error),
                                         nameof(HomeController).Replace("Controller", ""));
             }
         }
@@ -76,7 +66,7 @@ namespace UrlShortener.Web.Controllers
             }
             catch (Exception)
             {
-                return RedirectToAction(nameof(HomeController.Index),
+                return RedirectToAction(nameof(HomeController.Error),
                                         nameof(HomeController).Replace("Controller", ""));
             }
         }
@@ -98,6 +88,48 @@ namespace UrlShortener.Web.Controllers
         }
 
         [HttpGet]
+        public IActionResult RedirectTo(string shortUrl)
+        {
+            var linkShortenerDto = _urlShortenerService.GetByShortUrl(shortUrl).Data;
+            linkShortenerDto.QuantityClick++;
+            _urlShortenerService.ResponseUpdate(linkShortenerDto);
+            return Redirect(linkShortenerDto.Url.ToString());
+        }
+
+        public IActionResult UpdateUrl(string shortUrl)
+        {
+            var linkShortener = _urlShortenerService.GetByShortUrl(shortUrl).Data;
+            var entityViewModel = _mapperConfig.Mapper.Map<LinkShorterDtoModel, LinksInformationViewModel>(linkShortener);
+            return View(entityViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult UpdateUrl(string creationDate, LinksInformationViewModel linkFromView, string shortUrl = null)
+        {
+            try
+            {
+                if (linkFromView.Url != null && shortUrl == null)
+                {
+                    linkFromView.ShortUrl = GenerateShortUrl();
+                    linkFromView.QuantityClick = 0;
+                    linkFromView.CreationDate = DateTime.Now;
+                    return View(linkFromView);
+                }
+
+                var linkShortUrlDto = _mapperConfig.Mapper.Map<LinksInformationViewModel, LinkShorterDtoModel>(linkFromView);
+                linkShortUrlDto.CreationDate = DateTime.Parse(creationDate);
+                _urlShortenerService.ResponseUpdate(linkShortUrlDto);
+                return RedirectToAction(nameof(HomeController.MainPage),
+                                        nameof(HomeController).Replace("Controller", ""));
+            }
+            catch (Exception)
+            {
+                return RedirectToAction(nameof(HomeController.Error),
+                                        nameof(HomeController).Replace("Controller", ""));
+            }
+        }
+
+        [HttpGet]
         public IActionResult DeleteUrl(string shortUrl)
         {
             var linkShortenerDto = _urlShortenerService.GetByShortUrl(shortUrl).Data;
@@ -116,14 +148,9 @@ namespace UrlShortener.Web.Controllers
             }
             catch (Exception)
             {
-                return RedirectToAction(nameof(HomeController.Index),
+                return RedirectToAction(nameof(HomeController.Error),
                                         nameof(HomeController).Replace("Controller", ""));
             }
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

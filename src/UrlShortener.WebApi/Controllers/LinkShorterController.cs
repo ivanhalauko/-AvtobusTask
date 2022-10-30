@@ -1,10 +1,7 @@
-﻿using System.Web;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using UrlShortener.WebApi.DtoModels;
 using UrlShortener.WebApi.Interfaces;
 using UrlShortener.WebApi.Models;
-using UrlShortener.WebApi.Repository;
 
 namespace UrlShortener.WebApi.Controllers
 {
@@ -23,14 +20,6 @@ namespace UrlShortener.WebApi.Controllers
             _efGenericRepository = repository;
         }
 
-        ////public LinkShorterController(
-        ////    IMapperConfig mapperConfig)
-        ////{
-        ////    _mapperConfig = mapperConfig;
-        ////    _efGenericRepository = new EfGenericRepository<UrlModel>("user id=root;password=Mar_123;host=127.0.0.1;database=urlshortenerdatabase;");
-        ////}
-
-        // GET: LinkShorterController
         [HttpGet("GetAll")]
         public ActionResult<IEnumerable<UrlModelDto>> GetAll()
         {
@@ -39,7 +28,6 @@ namespace UrlShortener.WebApi.Controllers
             return urlDtoList is null ? NoContent() : Ok(urlDtoList.ToList());
         }
 
-        // POST api/<BookController>
         [HttpPost("Create")]
         public ActionResult<string> Create([FromBody] UrlModelDto urlApi)
         {
@@ -49,7 +37,6 @@ namespace UrlShortener.WebApi.Controllers
             return newUrl is null ? NoContent() : Ok(newUrl);
         }
 
-        // GET api/<BookController>/5
         [HttpGet("GetByShortUrl")]
         public ActionResult<UrlModel> GetByShortUrlWithParams(string shortLink)
         {
@@ -58,7 +45,6 @@ namespace UrlShortener.WebApi.Controllers
             return urlModel is null ? NoContent() : Ok(urlModel);
         }
 
-        // DELETE api/<BookController>/name
         [HttpDelete("DeleteById/{id}")]
         public ActionResult DeleteById(int id)
         {
@@ -72,73 +58,12 @@ namespace UrlShortener.WebApi.Controllers
             return Ok();
         }
 
-        ////// GET: LinkShorterController/Details/5
-        ////public ActionResult Details(int id)
-        ////{
-        ////    return View();
-        ////}
-
-        ////// GET: LinkShorterController/Create
-        ////public ActionResult Create()
-        ////{
-        ////    return View();
-        ////}
-
-        ////// POST: LinkShorterController/Create
-        ////[HttpPost]
-        ////[ValidateAntiForgeryToken]
-        ////public ActionResult Create(IFormCollection collection)
-        ////{
-        ////    try
-        ////    {
-        ////        return RedirectToAction(nameof(Index));
-        ////    }
-        ////    catch
-        ////    {
-        ////        return View();
-        ////    }
-        ////}
-
-        ////// GET: LinkShorterController/Edit/5
-        ////public ActionResult Edit(int id)
-        ////{
-        ////    return View();
-        ////}
-
-        ////// POST: LinkShorterController/Edit/5
-        ////[HttpPost]
-        ////[ValidateAntiForgeryToken]
-        ////public ActionResult Edit(int id, IFormCollection collection)
-        ////{
-        ////    try
-        ////    {
-        ////        return RedirectToAction(nameof(Index));
-        ////    }
-        ////    catch
-        ////    {
-        ////        return View();
-        ////    }
-        ////}
-
-        ////// GET: LinkShorterController/Delete/5
-        ////public ActionResult Delete(int id)
-        ////{
-        ////    return View();
-        ////}
-
-        ////// POST: LinkShorterController/Delete/5
-        ////[HttpPost]
-        ////[ValidateAntiForgeryToken]
-        ////public ActionResult Delete(int id, IFormCollection collection)
-        ////{
-        ////    try
-        ////    {
-        ////        return RedirectToAction(nameof(Index));
-        ////    }
-        ////    catch
-        ////    {
-        ////        return View();
-        ////    }
-        ////}
+        [HttpPut("Update")]
+        public ActionResult<string> Update([FromBody] UrlModelDto urlApi)
+        {
+            var url = _mapperConfig.Mapper.Map<UrlModelDto, UrlModel>(urlApi);
+            var newUrl = _efGenericRepository.UpdateAsync(url).Result;
+            return newUrl is null ? NoContent() : Ok(newUrl);
+        }
     }
 }

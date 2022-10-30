@@ -13,7 +13,7 @@
     <a class="btn btn-sm btn-primary bg-orange" asp-action="CreateShortUrl">Create New</a>
 </td>
 
-<table id="example" class="display" style="width:100%; border-width:1px">
+<table id="example" class="display" style="width:100%; border-width:1px" style="display: inline-block">
     <thead>
         <tr>
             <th hidden>
@@ -22,8 +22,11 @@
             <th>
                 @Html.DisplayNameFor(model => model.Url)
             </th>
-            <th>
+            <th hidden>
                 @Html.DisplayNameFor(model => model.ShortUrl)
+            </th>
+            <th>
+                Short Url's link
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.CreationDate)
@@ -41,10 +44,18 @@
                 @Html.DisplayFor(modelItem => item.Id)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Url)
+                <a href="@Html.DisplayFor(modelItem => item.Url)">
+                        @Html.DisplayFor(modelItem => item.Url)
+                </a>
+            </td>
+            <td hidden>
+                @Html.DisplayFor(modelItem => item.ShortUrl)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ShortUrl)
+                <a asp-controller="Home" asp-action="RedirectTo"
+                   asp-route-shortUrl=@item.ShortUrl>
+                   @Html.DisplayFor(modelItem => item.ShortUrl)
+                </a>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CreationDate)
@@ -53,7 +64,7 @@
                 @Html.DisplayFor(modelItem => item.QuantityClick)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Edit", "UpdateUrl", new { shortUrl = item.ShortUrl  }) |
                 @Html.ActionLink("Delete", "DeleteUrl", new {  shortUrl = item.ShortUrl  })
             </td>
         </tr>
