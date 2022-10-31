@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - UrlShortener.Web</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/MyBootstrap.css" />
+    <link rel="stylesheet" href="~/css/sites.css" />
+    <link rel="stylesheet" href="~/css/styleCommingEventss.css" />
+    <link rel="stylesheet" href="~/css/demoFonts.css" type="text/css" />
+    <link rel="stylesheet" href="~/css/styleFonts.css" type="text/css" />
+    <link rel="stylesheet" href="~/css/ticketsSty.css" type="text/css" />
+    <link rel="stylesheet" href="~/css/formStyl.css" type="text/css" />
+    <link rel="stylesheet" href="~/css/langMenuStyle.css" type="text/css" />
+    <link rel="stylesheet" href="~/css/jquery/1.12.1/css/query.dataTables.css" type="text/css" />
+    <link rel="stylesheet" href="~/css/jquery/buttons/2.2.3/css/buttons.dataTables.css" type="text/css" />
+    <link rel="stylesheet" href="~/css/jquery/fixedheader/3.2.3/css/fixedHeader.dataTables.css" type="text/css" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3">
+            <div class="container">
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item marging-padding ">
+                            <a class="nav-link text-dark bg-orange" asp-area="" asp-controller="Home" asp-action="MainPage"><span class="icon-home"></span> Home</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2022 - UrlShortener.Web
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

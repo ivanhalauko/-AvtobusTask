@@ -1,0 +1,60 @@
+﻿@model UrlShortener.Web.Models.LinksInformationViewModel
+
+@{
+    ViewData["Title"] = "CreateShortUrl";
+}
+
+<div class="container-fluid">
+
+    <div class="col-md-4 offset-md-4">
+        <div class="form-container" style="display: inline-block">
+            <form class="form-horizontal" method="post" asp-controller="Home" asp-action="UpdateShortUrl">
+                <div asp-validation-summary="ModelOnly"></div>
+                <h1 class="title">UpdateShortUrl</h1>
+                <div class="form-group">
+                    <span class="icon icon-link"></span>
+                    <label asp-for="Url" class="control-label"></label>
+                    <input asp-for="Url" class="form-control" />
+                    @Html.ValidationMessageFor(model => model.Url)
+                    <span asp-validation-for="Url" class="text-danger"></span>
+                </div>
+
+                <h2 class="title">GenerateShortUrl:</h2>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary"
+                            asp-action="UpdateUrl" asp-controller="Home">
+                        GenerateSHortUrl
+                    </button>
+                    
+                    <span class="icon icon-link"></span>
+                    <label asp-for="ShortUrl">YourShortUrl:</label>
+                    <p>@Model.ShortUrl</p>
+                    <button type="submit" class="btn btn-primary"
+                            asp-action="UpdateUrl" asp-controller="Home"
+                            asp-route-shortUrl="@Model.ShortUrl"
+                            asp-route-creationDate="@Model.CreationDate">
+                        Update
+                    </button>
+                    <div class="form-group">
+                        <span class="icon icon-calendar"></span>
+                        <label asp-for="CreationDate" class="control-label"></label>
+                        <p>@Model.CreationDate</p>
+                    </div>
+
+                </div>
+                
+                @*<div class="form-group">
+                    <button type="submit" class="btn btn-primary">Create</button>
+                </div>*@
+
+                <div class="form-group">
+                    <input type="hidden" asp-for="Id" name="Id" class="form-control" />
+                </div>
+                
+            </form>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
