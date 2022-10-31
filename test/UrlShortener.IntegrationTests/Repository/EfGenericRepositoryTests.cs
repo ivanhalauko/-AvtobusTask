@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using FluentAssertions;
 using NUnit.Framework;
-using UrlShortener.DataAccess.Context;
-using UrlShortener.DataAccess.Models;
-using UrlShortener.DataAccess.Repository;
 using UrlShortener.IntegrationTests.Utilities;
+using UrlShortener.WebApi.Context;
+using UrlShortener.WebApi.Models;
+using UrlShortener.WebApi.Repository;
 
 namespace UrlShortener.DataAccess.Repository.Tests
 {
