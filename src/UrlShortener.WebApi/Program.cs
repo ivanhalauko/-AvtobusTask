@@ -1,9 +1,5 @@
-////using Autofac;
-////using Autofac.Extensions.DependencyInjection;
-using AutoMapper;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.OpenApi.Models;
 using UrlShortener.WebApi.Context;
+using UrlShortener.WebApi.Data;
 using UrlShortener.WebApi.Infrastructure;
 using UrlShortener.WebApi.Interfaces;
 using UrlShortener.WebApi.Models;
@@ -21,20 +17,11 @@ namespace UrlShortener.WebApi
         {
             var builder = WebApplication.CreateBuilder(args);
             var dbConnectionstring = builder.Configuration.GetConnectionString("DbConnectionstring");
-            ////builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
-            ////builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
-            ////{
-            ////    // Add your Autofac DI registrations here
-            ////    ////builder.RegisterModule(new DataAccessModule(dbConnectionstring));
-            ////    builder.RegisterModule(new DataAccessModule());
-            ////    builder.RegisterModule(new AppModule());
-            ////});
-
             builder.Services.AddControllers();
             builder.Services.AddSwaggerGen();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddScoped<IMapperConfig>(s => new MapperConfig(new MapperProfile()));
-            ////builder.Services.AddScoped<UrlShortDbContext>(s => new UrlShortDbContext(dbConnectionstring));
+            builder.Services.AddScoped<UrlShortDbContext>(s => new UrlShortDbContext(dbConnectionstring));
             builder.Services.AddScoped<IEfGenericRepository<UrlModel>>(s => new EfGenericRepository<UrlModel>(dbConnectionstring));
 
             var app = builder.Build();
@@ -47,10 +34,13 @@ namespace UrlShortener.WebApi
             }
 
             app.UseHttpsRedirection();
-
             app.UseAuthorization();
-
             app.MapControllers();
+            using (var scope = app.Services.CreateScope())
+            {
+                UrlShortDbContext context = scope.ServiceProvider.GetRequiredService<UrlShortDbContext>();
+                DbUrlObjects.Initial(context);
+            }
 
             app.Run();
         }
