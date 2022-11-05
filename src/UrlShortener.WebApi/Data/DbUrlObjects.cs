@@ -1,4 +1,5 @@
-﻿using UrlShortener.WebApi.Context;
+﻿using Microsoft.EntityFrameworkCore;
+using UrlShortener.WebApi.Context;
 using UrlShortener.WebApi.Models;
 
 namespace UrlShortener.WebApi.Data

@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using UrlShortener.WebApi.Context;
 using UrlShortener.WebApi.Data;
 using UrlShortener.WebApi.Infrastructure;
@@ -39,6 +40,7 @@ namespace UrlShortener.WebApi
             using (var scope = app.Services.CreateScope())
             {
                 UrlShortDbContext context = scope.ServiceProvider.GetRequiredService<UrlShortDbContext>();
+                context.Database.Migrate();
                 DbUrlObjects.Initial(context);
             }
 
